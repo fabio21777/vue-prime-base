@@ -6,17 +6,34 @@ const router = createRouter({
     {
       path: '/about',
       name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../domains/AboutView.vue')
+      component: () => import('../domains/AboutView.vue'),
+      meta: { requiresAuth: true } // se estiver autenticado, acessa a rotas protegidas
+      
     },
     {
       path: '/login',
       name: 'login',
       component: () => import('../domains/auth/views/Login.vue')
+    }, // se o path não existir, redireciona para a rota de login
+    {
+      path: '/:pathMatch(.*)*',
+      redirect: { name: 'login' }
     }
   ]
 })
+
+// Definindo o método de verificação de autenticação
+function isAuthenticated() {
+  return !!localStorage.getItem('myToken'); // isso é um exemplo, você pode implementar a lógica que quiser
+}
+
+// Adicionando o global guard
+router.beforeEach((to, from, next) => {
+  if (to.meta.requiresAuth && !isAuthenticated()) {
+    next({ name: 'login' });
+  } else {
+    next();
+  }
+});
 
 export default router

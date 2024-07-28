@@ -1,5 +1,6 @@
 import { useFetch, type UseFetchReturn } from '@vueuse/core'
 import environment from '../environment/local';
+import router from '@/router';
 
 
 const BASE_URL =  environment.api;
@@ -10,8 +11,8 @@ async function beforeFetchInterceptor({ url, options, cancel }) {
   const myToken = "myToken"
   if (!myToken) {
     cancel()
+    router.push({ name: 'login' })
   }
-  console.log('beforeFetchInterceptor')
   options.headers = {
     ...options.headers,
     Authorization: `Bearer ${myToken}`,
