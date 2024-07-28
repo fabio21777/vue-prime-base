@@ -7,6 +7,8 @@ import Aura from '@primevue/themes/aura';
 import App from './App.vue'
 import router from './router'
 import 'primeicons/primeicons.css'
+import '@/assets/styles.scss';
+import '@/assets/tailwind.css';
 
 
 const app = createApp(App)
@@ -19,7 +21,7 @@ app.use(PrimeVue, {
 		options: {
 			cssLayer: {
 				name: 'primevue',
-				order: 'tailwind-base, primevue, tailwind-utilities'
+				order: 'primevue, tailwind-base, tailwind-utilities'
 			}
 		}
 	}

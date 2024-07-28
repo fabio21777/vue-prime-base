@@ -1,34 +1,48 @@
 import { useFetch, type UseFetchReturn } from '@vueuse/core'
+import environment from '../environment/local';
 
-interface FetchOptions {
-  [key: string]: any;
+
+const BASE_URL =  environment.api;
+
+
+// Interceptor beforeFetch
+async function beforeFetchInterceptor({ url, options, cancel }) {
+  const myToken = "myToken"
+  if (!myToken) {
+    cancel()
+  }
+  console.log('beforeFetchInterceptor')
+  options.headers = {
+    ...options.headers,
+    Authorization: `Bearer ${myToken}`,
+  }
+
+  return {
+    options,
+  }
 }
 
-export const useFetchInterceptors = (url: string, options: FetchOptions = {}): UseFetchReturn<any> => {
-  const fetchReturn: UseFetchReturn<any> = useFetch(url, {
-    ...options,
-    beforeFetch({ url, options }) {
-      console.log('Interceptando antes de enviar a request:', url, options);
-      options.headers = {
-        ...options.headers,
-        'Authorization': 'Bearer my-token',
-      };
+// Interceptor afterFetch
+function afterFetchInterceptor(ctx) {
+  console.log('afterFetch')
+  // Implementar lógica de modificação dos dados da resposta se necessário
+  return ctx
+}
 
-      return { options };
-    },
-    afterFetch(ctx) {
-      console.log('Interceptando a resposta:', ctx);
-      if (ctx.response.status === 401) {
-        console.error('Usuário não autorizado!');
-      }
+// Interceptor onFetchError
+function onFetchErrorInterceptor(ctx) {
+  console.log('onFetchError')
+  // Implementar lógica de modificação dos dados e erro em caso de erro
+  return ctx
+}
 
-      return ctx;
-    },
-    onFetchError(ctx) {
-      console.error('Erro ao fazer a request:', ctx);
-      return ctx;
-    },
-  });
-
-  return fetchReturn;
+// Função para uso de fetch com interceptores
+export function useCustomFetch(url: string) {
+  url = `${BASE_URL}${url}`
+  return useFetch(url, {
+    beforeFetch: beforeFetchInterceptor,
+    afterFetch: afterFetchInterceptor,
+    updateDataOnError: true,
+    onFetchError: onFetchErrorInterceptor,
+  })
 }
