@@ -9,11 +9,13 @@ import router from './router'
 import 'primeicons/primeicons.css'
 import '@/assets/styles.scss';
 import '@/assets/tailwind.css';
+import { MotionPlugin } from '@vueuse/motion'
 
 
 const app = createApp(App)
 
 app.use(createPinia())
+app.use(MotionPlugin)
 app.use(router)
 app.use(PrimeVue, {
 	theme: {
