@@ -1,4 +1,4 @@
-import { useFetch, type UseFetchReturn } from '@vueuse/core'
+import { useFetch} from '@vueuse/core'
 import environment from '../environment/local';
 import router from '@/router';
 
@@ -7,7 +7,7 @@ const BASE_URL =  environment.api;
 
 
 // Interceptor beforeFetch
-async function beforeFetchInterceptor({ url, options, cancel }) {
+async function beforeFetchInterceptor({options, cancel }) {
   const myToken = "myToken"
   if (!myToken) {
     cancel()

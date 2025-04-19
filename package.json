@@ -17,6 +17,7 @@
     "@primevue/themes": "^4.0.0",
     "@vee-validate/yup": "4.15.0",
     "@vueuse/core": "^13.1.0",
+    "@vueuse/motion": "^3.0.3",
     "pinia": "^3.0.2",
     "primeicons": "^7.0.0",
     "primevue": "^4.3.3",

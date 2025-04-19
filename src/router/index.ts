@@ -13,8 +13,13 @@ const router = createRouter({
     {
       path: '/login',
       name: 'login',
-      component: () => import('../domains/auth/views/Login.vue')
+      component: () => import('../domains/auth/views/LoginViews.vue')
     }, // se o path não existir, redireciona para a rota de login
+    {
+      path: '/animation',
+      name: 'animation',
+      component: () => import('../domains/animacao/views/AnimacaoViews.vue')
+    },
     {
       path: '/:pathMatch(.*)*',
       redirect: { name: 'login' }
