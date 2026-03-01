@@ -139,10 +139,6 @@ export interface UseInfiniteScrollOptions<
    */
   canLoadMore?: (el: T) => boolean
 }
-export interface UseInfiniteScrollReturn {
-  isLoading: ComputedRef<boolean>
-  reset: () => void
-}
 /**
  * Reactive infinite scroll.
  *
@@ -150,7 +146,12 @@ export interface UseInfiniteScrollReturn {
  */
 export declare function useInfiniteScroll<T extends InfiniteScrollElement>(
   element: MaybeRefOrGetter<T>,
-  onLoadMore: (state: UnwrapNestedRefs<UseScrollReturn>) => Awaitable<void>,
+  onLoadMore: (
+    state: UnwrapNestedRefs<ReturnType<typeof useScroll>>,
+  ) => Awaitable<void>,
   options?: UseInfiniteScrollOptions<T>,
-): UseInfiniteScrollReturn
+): {
+  isLoading: ComputedRef<boolean>
+  reset(): void
+}
 ```

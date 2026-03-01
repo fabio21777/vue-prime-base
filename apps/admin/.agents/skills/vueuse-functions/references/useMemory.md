@@ -37,26 +37,8 @@ export interface MemoryInfo {
   readonly usedJSHeapSize: number
   [Symbol.toStringTag]: "MemoryInfo"
 }
-export interface UseMemoryOptions extends ConfigurableScheduler {
-  /**
-   * Start the timer immediately
-   *
-   * @deprecated Please use `scheduler` option instead
-   * @default true
-   */
-  immediate?: boolean
-  /**
-   * Execute the callback immediately after calling `resume`
-   *
-   * @deprecated Please use `scheduler` option instead
-   * @default false
-   */
-  immediateCallback?: boolean
-  /** @deprecated Please use `scheduler` option instead */
+export interface UseMemoryOptions extends UseIntervalFnOptions {
   interval?: number
-}
-export interface UseMemoryReturn extends Supportable {
-  memory: Ref<MemoryInfo | undefined>
 }
 /**
  * Reactive Memory Info.
@@ -66,5 +48,9 @@ export interface UseMemoryReturn extends Supportable {
  *
  * @__NO_SIDE_EFFECTS__
  */
-export declare function useMemory(options?: UseMemoryOptions): UseMemoryReturn
+export declare function useMemory(options?: UseMemoryOptions): {
+  isSupported: ComputedRef<boolean>
+  memory: Ref<MemoryInfo | undefined, MemoryInfo | undefined>
+}
+export type UseMemoryReturn = ReturnType<typeof useMemory>
 ```

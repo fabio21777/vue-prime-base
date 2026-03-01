@@ -33,31 +33,7 @@ const { text, copy, copied, isSupported } = useClipboard({ source })
 </template>
 ```
 
-### Options
-
-| Option         | Type                       | Default | Description                                                       |
-| -------------- | -------------------------- | ------- | ----------------------------------------------------------------- |
-| `source`       | `MaybeRefOrGetter<string>` | —       | Default content to copy when `copy()` is called without arguments |
-| `read`         | `boolean`                  | `false` | Enable reading clipboard content on copy/cut events               |
-| `copiedDuring` | `number`                   | `1500`  | Milliseconds before `copied` resets to `false`                    |
-| `legacy`       | `boolean`                  | `false` | Fallback to `document.execCommand` if Clipboard API unavailable   |
-
-### Return Values
-
-| Property      | Type                               | Description                                       |
-| ------------- | ---------------------------------- | ------------------------------------------------- |
-| `isSupported` | `ComputedRef<boolean>`             | Whether clipboard is supported (native or legacy) |
-| `text`        | `Ref<string>`                      | Current clipboard content (when `read: true`)     |
-| `copied`      | `Ref<boolean>`                     | `true` after successful copy, auto-resets         |
-| `copy`        | `(text?: string) => Promise<void>` | Copy text to clipboard                            |
-
-### Legacy Mode
-
 Set `legacy: true` to keep the ability to copy if [Clipboard API](https://developer.mozilla.org/en-US/docs/Web/API/Clipboard_API) is not available. It will handle copy with [execCommand](https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand) as fallback.
-
-```ts
-const { copy, isSupported } = useClipboard({ legacy: true })
-```
 
 ## Component Usage
 
@@ -98,7 +74,8 @@ export interface UseClipboardOptions<Source> extends ConfigurableNavigator {
    */
   legacy?: boolean
 }
-export interface UseClipboardReturn<Optional> extends Supportable {
+export interface UseClipboardReturn<Optional> {
+  isSupported: ComputedRef<boolean>
   text: Readonly<ShallowRef<string>>
   copied: Readonly<ShallowRef<boolean>>
   copy: Optional extends true

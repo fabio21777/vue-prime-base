@@ -60,12 +60,6 @@ export interface ElementSize {
   width: number
   height: number
 }
-export interface UseElementSizeOptions extends UseResizeObserverOptions {}
-export interface UseElementSizeReturn {
-  width: ShallowRef<number>
-  height: ShallowRef<number>
-  stop: () => void
-}
 /**
  * Reactive size of an HTML element.
  *
@@ -74,6 +68,11 @@ export interface UseElementSizeReturn {
 export declare function useElementSize(
   target: MaybeComputedElementRef,
   initialSize?: ElementSize,
-  options?: UseElementSizeOptions,
-): UseElementSizeReturn
+  options?: UseResizeObserverOptions,
+): {
+  width: ShallowRef<number, number>
+  height: ShallowRef<number, number>
+  stop: () => void
+}
+export type UseElementSizeReturn = ReturnType<typeof useElementSize>
 ```

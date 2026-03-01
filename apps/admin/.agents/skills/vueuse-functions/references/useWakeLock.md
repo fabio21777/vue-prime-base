@@ -30,13 +30,6 @@ export interface WakeLockSentinel extends EventTarget {
   release: () => Promise<void>
 }
 export type UseWakeLockOptions = ConfigurableNavigator & ConfigurableDocument
-export interface UseWakeLockReturn extends Supportable {
-  sentinel: ShallowRef<WakeLockSentinel | null>
-  isActive: ComputedRef<boolean>
-  request: (type: WakeLockType) => Promise<void>
-  forceRequest: (type: WakeLockType) => Promise<void>
-  release: () => Promise<void>
-}
 /**
  * Reactive Screen Wake Lock API.
  *
@@ -45,7 +38,13 @@ export interface UseWakeLockReturn extends Supportable {
  *
  * @__NO_SIDE_EFFECTS__
  */
-export declare function useWakeLock(
-  options?: UseWakeLockOptions,
-): UseWakeLockReturn
+export declare function useWakeLock(options?: UseWakeLockOptions): {
+  sentinel: ShallowRef<WakeLockSentinel | null, WakeLockSentinel | null>
+  isSupported: ComputedRef<boolean>
+  isActive: ComputedRef<boolean>
+  request: (type: WakeLockType) => Promise<void>
+  forceRequest: (type: WakeLockType) => Promise<void>
+  release: () => Promise<void>
+}
+export type UseWakeLockReturn = ReturnType<typeof useWakeLock>
 ```

@@ -23,13 +23,6 @@ const state = useTextSelection()
 ## Type Declarations
 
 ```ts
-export interface UseTextSelectionOptions extends ConfigurableWindow {}
-export interface UseTextSelectionReturn {
-  text: ComputedRef<string>
-  rects: ComputedRef<DOMRect[]>
-  ranges: ComputedRef<Range[]>
-  selection: ShallowRef<Selection | null>
-}
 /**
  * Reactively track user text selection based on [`Window.getSelection`](https://developer.mozilla.org/en-US/docs/Web/API/Window/getSelection).
  *
@@ -37,7 +30,11 @@ export interface UseTextSelectionReturn {
  *
  * @__NO_SIDE_EFFECTS__
  */
-export declare function useTextSelection(
-  options?: UseTextSelectionOptions,
-): UseTextSelectionReturn
+export declare function useTextSelection(options?: ConfigurableWindow): {
+  text: ComputedRef<string>
+  rects: ComputedRef<DOMRect[]>
+  ranges: ComputedRef<Range[]>
+  selection: ShallowRef<Selection | null, Selection | null>
+}
+export type UseTextSelectionReturn = ReturnType<typeof useTextSelection>
 ```

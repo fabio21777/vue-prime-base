@@ -204,24 +204,6 @@ export interface UseScrollOptions extends ConfigurableWindow {
    */
   onError?: (error: unknown) => void
 }
-export interface UseScrollReturn {
-  x: WritableComputedRef<number>
-  y: WritableComputedRef<number>
-  isScrolling: ShallowRef<boolean>
-  arrivedState: {
-    left: boolean
-    right: boolean
-    top: boolean
-    bottom: boolean
-  }
-  directions: {
-    left: boolean
-    right: boolean
-    top: boolean
-    bottom: boolean
-  }
-  measure: () => void
-}
 /**
  * Reactive scroll.
  *
@@ -234,5 +216,23 @@ export declare function useScroll(
     HTMLElement | SVGElement | Window | Document | null | undefined
   >,
   options?: UseScrollOptions,
-): UseScrollReturn
+): {
+  x: WritableComputedRef<number, number>
+  y: WritableComputedRef<number, number>
+  isScrolling: ShallowRef<boolean, boolean>
+  arrivedState: {
+    left: boolean
+    right: boolean
+    top: boolean
+    bottom: boolean
+  }
+  directions: {
+    left: boolean
+    right: boolean
+    top: boolean
+    bottom: boolean
+  }
+  measure(): void
+}
+export type UseScrollReturn = ReturnType<typeof useScroll>
 ```

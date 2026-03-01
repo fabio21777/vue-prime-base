@@ -78,13 +78,6 @@ export interface ScreenOrientation extends EventTarget {
     useCapture?: boolean,
   ) => void
 }
-export interface UseScreenOrientationOptions extends ConfigurableWindow {}
-export interface UseScreenOrientationReturn extends Supportable {
-  orientation: Ref<OrientationType | undefined>
-  angle: ShallowRef<number>
-  lockOrientation: (type: OrientationLockType) => Promise<void>
-  unlockOrientation: () => void
-}
 /**
  * Reactive screen orientation
  *
@@ -92,7 +85,12 @@ export interface UseScreenOrientationReturn extends Supportable {
  *
  * @__NO_SIDE_EFFECTS__
  */
-export declare function useScreenOrientation(
-  options?: UseScreenOrientationOptions,
-): UseScreenOrientationReturn
+export declare function useScreenOrientation(options?: ConfigurableWindow): {
+  isSupported: ComputedRef<boolean>
+  orientation: Ref<OrientationType | undefined, OrientationType | undefined>
+  angle: ShallowRef<number, number>
+  lockOrientation: (type: OrientationLockType) => Promise<void>
+  unlockOrientation: () => void
+}
+export type UseScreenOrientationReturn = ReturnType<typeof useScreenOrientation>
 ```

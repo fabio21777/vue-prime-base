@@ -66,7 +66,7 @@ export interface UseDevicesListOptions extends ConfigurableNavigator {
    */
   constraints?: MediaStreamConstraints
 }
-export interface UseDevicesListReturn extends Supportable {
+export interface UseDevicesListReturn {
   /**
    * All devices
    */
@@ -76,6 +76,7 @@ export interface UseDevicesListReturn extends Supportable {
   audioOutputs: ComputedRef<MediaDeviceInfo[]>
   permissionGranted: ShallowRef<boolean>
   ensurePermissions: () => Promise<boolean>
+  isSupported: ComputedRef<boolean>
 }
 /**
  * Reactive `enumerateDevices` listing available input/output devices

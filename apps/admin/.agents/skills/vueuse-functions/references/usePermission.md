@@ -39,9 +39,8 @@ export type GeneralPermissionDescriptor =
   | {
       name: DescriptorNamePolyfill
     }
-export interface UsePermissionOptions<
-  Controls extends boolean,
-> extends ConfigurableNavigator {
+export interface UsePermissionOptions<Controls extends boolean>
+  extends ConfigurableNavigator {
   /**
    * Expose more controls
    *
@@ -52,8 +51,9 @@ export interface UsePermissionOptions<
 export type UsePermissionReturn = Readonly<
   ShallowRef<PermissionState | undefined>
 >
-export interface UsePermissionReturnWithControls extends Supportable {
+export interface UsePermissionReturnWithControls {
   state: UsePermissionReturn
+  isSupported: ComputedRef<boolean>
   query: () => Promise<PermissionStatus | undefined>
 }
 /**

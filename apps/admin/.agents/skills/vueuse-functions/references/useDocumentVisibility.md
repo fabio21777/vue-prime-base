@@ -29,8 +29,6 @@ const visibility = useDocumentVisibility()
 ## Type Declarations
 
 ```ts
-export interface UseDocumentVisibilityOptions extends ConfigurableDocument {}
-export type UseDocumentVisibilityReturn = ShallowRef<DocumentVisibilityState>
 /**
  * Reactively track `document.visibilityState`.
  *
@@ -39,6 +37,9 @@ export type UseDocumentVisibilityReturn = ShallowRef<DocumentVisibilityState>
  * @__NO_SIDE_EFFECTS__
  */
 export declare function useDocumentVisibility(
-  options?: UseDocumentVisibilityOptions,
-): UseDocumentVisibilityReturn
+  options?: ConfigurableDocument,
+): ShallowRef<string, string>
+export type UseDocumentVisibilityReturn = ReturnType<
+  typeof useDocumentVisibility
+>
 ```

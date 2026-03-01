@@ -4,7 +4,7 @@ category: Sensors
 
 # onClickOutside
 
-Listen for clicks outside of an element. Useful for modals or dropdowns.
+Listen for clicks outside of an element. Useful for modal or dropdown.
 
 ## Usage
 
@@ -26,23 +26,10 @@ onClickOutside(target, event => console.log(event))
 </template>
 ```
 
-### Return Value
-
-By default, `onClickOutside` returns a `stop` function to remove the event listeners.
+If you need more control over triggering the handler, you can use the `controls` option.
 
 ```ts
-const stop = onClickOutside(target, handler)
-
-// Later, stop listening
-stop()
-```
-
-### Controls
-
-If you need more control over triggering the handler, you can use the `controls` option. This returns an object with `stop`, `cancel`, and `trigger` functions.
-
-```ts
-const { stop, cancel, trigger } = onClickOutside(
+const { cancel, trigger } = onClickOutside(
   modalRef,
   (event) => {
     modal.value = false
@@ -50,44 +37,24 @@ const { stop, cancel, trigger } = onClickOutside(
   { controls: true },
 )
 
-// cancel prevents the next click from triggering the handler
-cancel()
-
-// trigger manually fires the handler
-trigger(event)
-
-// stop removes all event listeners
-stop()
+useEventListener('pointermove', (e) => {
+  cancel()
+  // or
+  trigger(e)
+})
 ```
 
-### Ignore Elements
-
-Use the `ignore` option to prevent certain elements from triggering the handler. Provide elements as an array of Refs or CSS selectors.
+If you want to ignore certain elements, you can use the `ignore` option. Provide the elements to ignore as an array of Refs or CSS Selectors.
 
 ```ts
 const ignoreElRef = useTemplateRef('ignoreEl')
+const ignoreElSelector = '.ignore-el'
 
 onClickOutside(
   target,
   event => console.log(event),
-  { ignore: [ignoreElRef, '.ignore-class', '#ignore-id'] },
+  { ignore: [ignoreElRef, ignoreElSelector] },
 )
-```
-
-### Capture Phase
-
-By default, the event listener uses the capture phase (`capture: true`). Set `capture: false` to use the bubbling phase instead.
-
-```ts
-onClickOutside(target, handler, { capture: false })
-```
-
-### Detect Iframe Clicks
-
-Clicks inside an iframe are not detected by default. Enable `detectIframe` to also trigger the handler when focus moves to an iframe.
-
-```ts
-onClickOutside(target, handler, { detectIframe: true })
 ```
 
 ## Component Usage
@@ -163,9 +130,8 @@ const onClickOutsideHandler = [
 ## Type Declarations
 
 ```ts
-export interface OnClickOutsideOptions<
-  Controls extends boolean = false,
-> extends ConfigurableWindow {
+export interface OnClickOutsideOptions<Controls extends boolean = false>
+  extends ConfigurableWindow {
   /**
    * List of elements that should not trigger the event,
    * provided as Refs or CSS Selectors.
@@ -195,14 +161,11 @@ export type OnClickOutsideHandler<
     | (T["controls"] extends true ? Event : never)
     | PointerEvent,
 ) => void
-export type OnClickOutsideReturn<Controls extends boolean = false> =
-  Controls extends false
-    ? Fn
-    : {
-        stop: Fn
-        cancel: Fn
-        trigger: (event: Event) => void
-      }
+interface OnClickOutsideControlsReturn {
+  stop: Fn
+  cancel: Fn
+  trigger: (event: Event) => void
+}
 /**
  * Listen for clicks outside of an element.
  *
@@ -220,9 +183,5 @@ export declare function onClickOutside<T extends OnClickOutsideOptions<true>>(
   target: MaybeComputedElementRef,
   handler: OnClickOutsideHandler<T>,
   options: T,
-): {
-  stop: Fn
-  cancel: Fn
-  trigger: (event: Event) => void
-}
+): OnClickOutsideControlsReturn
 ```

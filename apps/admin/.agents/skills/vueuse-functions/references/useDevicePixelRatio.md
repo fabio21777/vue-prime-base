@@ -29,11 +29,6 @@ const { pixelRatio } = useDevicePixelRatio()
 ## Type Declarations
 
 ```ts
-export interface UseDevicePixelRatioOptions extends ConfigurableWindow {}
-export interface UseDevicePixelRatioReturn {
-  pixelRatio: ShallowRef<number>
-  stop: WatchStopHandle
-}
 /**
  * Reactively track `window.devicePixelRatio`.
  *
@@ -41,7 +36,9 @@ export interface UseDevicePixelRatioReturn {
  *
  * @__NO_SIDE_EFFECTS__
  */
-export declare function useDevicePixelRatio(
-  options?: UseDevicePixelRatioOptions,
-): UseDevicePixelRatioReturn
+export declare function useDevicePixelRatio(options?: ConfigurableWindow): {
+  pixelRatio: Readonly<Ref<number, number>>
+  stop: WatchStopHandle
+}
+export type UseDevicePixelRatioReturn = ReturnType<typeof useDevicePixelRatio>
 ```

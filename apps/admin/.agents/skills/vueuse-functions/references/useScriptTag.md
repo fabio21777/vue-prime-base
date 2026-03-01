@@ -95,11 +95,6 @@ export interface UseScriptTagOptions extends ConfigurableDocument {
    */
   nonce?: string
 }
-export interface UseScriptTagReturn {
-  scriptTag: ShallowRef<HTMLScriptElement | null>
-  load: (waitForScriptLoad?: boolean) => Promise<HTMLScriptElement | boolean>
-  unload: () => void
-}
 /**
  * Async script tag loading.
  *
@@ -112,5 +107,10 @@ export declare function useScriptTag(
   src: MaybeRefOrGetter<string>,
   onLoaded?: (el: HTMLScriptElement) => void,
   options?: UseScriptTagOptions,
-): UseScriptTagReturn
+): {
+  scriptTag: ShallowRef<HTMLScriptElement | null, HTMLScriptElement | null>
+  load: (waitForScriptLoad?: boolean) => Promise<HTMLScriptElement | boolean>
+  unload: () => void
+}
+export type UseScriptTagReturn = ReturnType<typeof useScriptTag>
 ```

@@ -62,7 +62,8 @@ export interface UseBroadcastChannelOptions extends ConfigurableWindow {
 export declare function useBroadcastChannel<D, P>(
   options: UseBroadcastChannelOptions,
 ): UseBroadcastChannelReturn<D, P>
-export interface UseBroadcastChannelReturn<D, P> extends Supportable {
+export interface UseBroadcastChannelReturn<D, P> {
+  isSupported: ComputedRef<boolean>
   channel: Ref<BroadcastChannel | undefined>
   data: Ref<D>
   post: (data: P) => void

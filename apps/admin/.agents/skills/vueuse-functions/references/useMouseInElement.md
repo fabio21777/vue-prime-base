@@ -96,16 +96,6 @@ export interface MouseInElementOptions extends UseMouseOptions {
    */
   windowResize?: boolean
 }
-export interface UseMouseInElementReturn extends UseMouseReturn {
-  elementX: ShallowRef<number>
-  elementY: ShallowRef<number>
-  elementPositionX: ShallowRef<number>
-  elementPositionY: ShallowRef<number>
-  elementHeight: ShallowRef<number>
-  elementWidth: ShallowRef<number>
-  isOutside: ShallowRef<boolean>
-  stop: () => void
-}
 /**
  * Reactive mouse position related to an element.
  *
@@ -117,9 +107,9 @@ export declare function useMouseInElement(
   target?: MaybeElementRef,
   options?: MouseInElementOptions,
 ): {
-  x: ShallowRef<number>
-  y: ShallowRef<number>
-  sourceType: ShallowRef<UseMouseSourceType>
+  x: ShallowRef<number, number>
+  y: ShallowRef<number, number>
+  sourceType: ShallowRef<UseMouseSourceType, UseMouseSourceType>
   elementX: ShallowRef<number, number>
   elementY: ShallowRef<number, number>
   elementPositionX: ShallowRef<number, number>
@@ -129,4 +119,5 @@ export declare function useMouseInElement(
   isOutside: ShallowRef<boolean, boolean>
   stop: () => void
 }
+export type UseMouseInElementReturn = ReturnType<typeof useMouseInElement>
 ```

@@ -42,7 +42,6 @@ console.log(network.isOnline)
 ## Type Declarations
 
 ```ts
-export interface UseNetworkOptions extends ConfigurableWindow {}
 export type NetworkType =
   | "bluetooth"
   | "cellular"
@@ -53,7 +52,8 @@ export type NetworkType =
   | "other"
   | "unknown"
 export type NetworkEffectiveType = "slow-2g" | "2g" | "3g" | "4g" | undefined
-export interface NetworkState extends Supportable {
+export interface NetworkState {
+  isSupported: ComputedRef<boolean>
   /**
    * If the user is currently connected.
    */
@@ -91,7 +91,6 @@ export interface NetworkState extends Supportable {
    */
   type: Readonly<ShallowRef<NetworkType>>
 }
-export type UseNetworkReturn = Readonly<NetworkState>
 /**
  * Reactive Network status.
  *
@@ -101,6 +100,7 @@ export type UseNetworkReturn = Readonly<NetworkState>
  * @__NO_SIDE_EFFECTS__
  */
 export declare function useNetwork(
-  options?: UseNetworkOptions,
-): UseNetworkReturn
+  options?: ConfigurableWindow,
+): Readonly<NetworkState>
+export type UseNetworkReturn = ReturnType<typeof useNetwork>
 ```

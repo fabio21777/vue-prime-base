@@ -50,15 +50,6 @@ export interface UseEyeDropperOptions {
    */
   initialValue?: string
 }
-export interface UseEyeDropperReturn extends Supportable {
-  sRGBHex: ShallowRef<string>
-  open: (openOptions?: EyeDropperOpenOptions) => Promise<
-    | {
-        sRGBHex: string
-      }
-    | undefined
-  >
-}
 /**
  * Reactive [EyeDropper API](https://developer.mozilla.org/en-US/docs/Web/API/EyeDropper_API)
  *
@@ -66,7 +57,15 @@ export interface UseEyeDropperReturn extends Supportable {
  *
  * @__NO_SIDE_EFFECTS__
  */
-export declare function useEyeDropper(
-  options?: UseEyeDropperOptions,
-): UseEyeDropperReturn
+export declare function useEyeDropper(options?: UseEyeDropperOptions): {
+  isSupported: ComputedRef<boolean>
+  sRGBHex: ShallowRef<string, string>
+  open: (openOptions?: EyeDropperOpenOptions) => Promise<
+    | {
+        sRGBHex: string
+      }
+    | undefined
+  >
+}
+export type UseEyeDropperReturn = ReturnType<typeof useEyeDropper>
 ```

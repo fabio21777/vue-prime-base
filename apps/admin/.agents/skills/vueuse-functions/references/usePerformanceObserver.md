@@ -41,7 +41,7 @@ export declare function usePerformanceObserver(
   options: UsePerformanceObserverOptions,
   callback: PerformanceObserverCallback,
 ): {
-  isSupported: UseSupportedReturn
+  isSupported: ComputedRef<boolean>
   start: () => void
   stop: () => void
 }

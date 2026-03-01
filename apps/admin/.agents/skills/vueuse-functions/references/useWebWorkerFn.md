@@ -83,11 +83,6 @@ export interface UseWebWorkerOptions extends ConfigurableWindow {
    */
   localDependencies?: Function[]
 }
-export interface UseWebWorkerFnReturn<T extends (...fnArgs: any[]) => any> {
-  workerFn: (...fnArgs: Parameters<T>) => Promise<ReturnType<T>>
-  workerStatus: ShallowRef<WebWorkerStatus>
-  workerTerminate: (status?: WebWorkerStatus) => void
-}
 /**
  * Run expensive function without blocking the UI, using a simple syntax that makes use of Promise.
  *
@@ -98,5 +93,10 @@ export interface UseWebWorkerFnReturn<T extends (...fnArgs: any[]) => any> {
 export declare function useWebWorkerFn<T extends (...fnArgs: any[]) => any>(
   fn: T,
   options?: UseWebWorkerOptions,
-): UseWebWorkerFnReturn<T>
+): {
+  workerFn: (...fnArgs: Parameters<T>) => Promise<ReturnType<T>>
+  workerStatus: ShallowRef<WebWorkerStatus, WebWorkerStatus>
+  workerTerminate: (status?: WebWorkerStatus) => void
+}
+export type UseWebWorkerFnReturn = ReturnType<typeof useWebWorkerFn>
 ```

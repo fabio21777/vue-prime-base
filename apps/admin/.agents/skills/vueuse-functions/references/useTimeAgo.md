@@ -96,8 +96,7 @@ export interface FormatTimeAgoOptions<
 export interface UseTimeAgoOptions<
   Controls extends boolean,
   UnitNames extends string = UseTimeAgoUnitNamesDefault,
->
-  extends FormatTimeAgoOptions<UnitNames>, ConfigurableScheduler {
+> extends FormatTimeAgoOptions<UnitNames> {
   /**
    * Expose more controls
    *
@@ -107,7 +106,6 @@ export interface UseTimeAgoOptions<
   /**
    * Intervals to update, set 0 to disable auto update
    *
-   * @deprecated Please use `scheduler` option instead
    * @default 30_000
    */
   updateInterval?: number

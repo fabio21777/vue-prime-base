@@ -12,7 +12,7 @@ Reactive async state. Will not block your setup function and will trigger change
 import { useAsyncState } from '@vueuse/core'
 import axios from 'axios'
 
-const { state, isReady, isLoading, error } = useAsyncState(
+const { state, isReady, isLoading } = useAsyncState(
   axios
     .get('https://jsonplaceholder.typicode.com/todos/1')
     .then(t => t.data),
@@ -20,29 +20,9 @@ const { state, isReady, isLoading, error } = useAsyncState(
 )
 ```
 
-### Return Values
+### Manually trigger the async function
 
-| Property           | Description                                         |
-| ------------------ | --------------------------------------------------- |
-| `state`            | The result of the async function                    |
-| `isReady`          | `true` when the promise has resolved at least once  |
-| `isLoading`        | `true` while the promise is pending                 |
-| `error`            | The error if the promise was rejected               |
-| `execute`          | Re-execute the async function with optional delay   |
-| `executeImmediate` | Re-execute immediately (shorthand for `execute(0)`) |
-
-### Awaiting the Result
-
-The return value is thenable, so you can await it in async functions or `<script setup>`:
-
-```ts
-const { state, isReady } = await useAsyncState(fetchData, null)
-// `state` is now populated, `isReady` is true
-```
-
-### Manual Execution
-
-Set `immediate: false` to prevent automatic execution on creation.
+You can also trigger it manually. This is useful when you want to control when the async function is executed.
 
 ```vue
 <script setup lang="ts">
@@ -69,31 +49,6 @@ async function action(event) {
 </template>
 ```
 
-### Options
-
-```ts
-const { state } = useAsyncState(promise, initialState, {
-  // Execute immediately on creation (default: true)
-  immediate: true,
-  // Delay before first execution in ms (default: 0)
-  delay: 0,
-  // Reset state to initial before each execution (default: true)
-  resetOnExecute: true,
-  // Use shallowRef for state (default: true)
-  shallow: true,
-  // Throw errors instead of catching them (default: false)
-  throwError: false,
-  // Called when promise resolves
-  onSuccess(data) {
-    console.log('Success:', data)
-  },
-  // Called when promise rejects
-  onError(error) {
-    console.error('Error:', error)
-  },
-})
-```
-
 ## Type Declarations
 
 ```ts
@@ -106,8 +61,8 @@ export interface UseAsyncStateReturnBase<
   isReady: Ref<boolean>
   isLoading: Ref<boolean>
   error: Ref<unknown>
-  execute: (delay?: number, ...args: Params) => Promise<Data | undefined>
-  executeImmediate: (...args: Params) => Promise<Data | undefined>
+  execute: (delay?: number, ...args: Params) => Promise<Data>
+  executeImmediate: (...args: Params) => Promise<Data>
 }
 export type UseAsyncStateReturn<
   Data,

@@ -140,7 +140,8 @@ export interface WebNotificationOptions {
   vibrate?: number[]
 }
 export interface UseWebNotificationOptions
-  extends ConfigurableWindow, WebNotificationOptions {
+  extends ConfigurableWindow,
+    WebNotificationOptions {
   /**
    * Request for permissions onMounted if it's not granted.
    *
@@ -150,19 +151,6 @@ export interface UseWebNotificationOptions
    */
   requestPermissions?: boolean
 }
-export interface UseWebNotificationReturn extends Supportable {
-  notification: Ref<Notification | null>
-  ensurePermissions: () => Promise<boolean | undefined>
-  permissionGranted: ShallowRef<boolean>
-  show: (
-    overrides?: WebNotificationOptions,
-  ) => Promise<Notification | undefined>
-  close: () => void
-  onClick: EventHookOn<Event>
-  onShow: EventHookOn<Event>
-  onError: EventHookOn<Event>
-  onClose: EventHookOn<Event>
-}
 /**
  * Reactive useWebNotification
  *
@@ -171,5 +159,19 @@ export interface UseWebNotificationReturn extends Supportable {
  */
 export declare function useWebNotification(
   options?: UseWebNotificationOptions,
-): UseWebNotificationReturn
+): {
+  isSupported: ComputedRef<boolean>
+  notification: Ref<Notification | null, Notification | null>
+  ensurePermissions: () => Promise<boolean | undefined>
+  permissionGranted: ShallowRef<boolean, boolean>
+  show: (
+    overrides?: WebNotificationOptions,
+  ) => Promise<Notification | undefined>
+  close: () => void
+  onClick: EventHookOn<any>
+  onShow: EventHookOn<any>
+  onError: EventHookOn<any>
+  onClose: EventHookOn<any>
+}
+export type UseWebNotificationReturn = ReturnType<typeof useWebNotification>
 ```

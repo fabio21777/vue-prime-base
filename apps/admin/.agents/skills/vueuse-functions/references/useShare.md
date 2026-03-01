@@ -48,9 +48,6 @@ export interface UseShareOptions {
   text?: string
   url?: string
 }
-export interface UseShareReturn extends Supportable {
-  share: (overrideOptions?: MaybeRefOrGetter<UseShareOptions>) => Promise<void>
-}
 /**
  * Reactive Web Share API.
  *
@@ -63,5 +60,9 @@ export interface UseShareReturn extends Supportable {
 export declare function useShare(
   shareOptions?: MaybeRefOrGetter<UseShareOptions>,
   options?: ConfigurableNavigator,
-): UseShareReturn
+): {
+  isSupported: ComputedRef<boolean>
+  share: (overrideOptions?: MaybeRefOrGetter<UseShareOptions>) => Promise<void>
+}
+export type UseShareReturn = ReturnType<typeof useShare>
 ```

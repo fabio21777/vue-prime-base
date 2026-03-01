@@ -83,12 +83,15 @@ export interface UseTextareaAutosizeOptions extends ConfigurableWindow {
   /** Specify the style property that will be used to manipulate height. Can be `height | minHeight`. Default value is `height`. */
   styleProp?: "height" | "minHeight"
 }
-export interface UseTextareaAutosizeReturn {
-  textarea: Ref<HTMLTextAreaElement | undefined | null>
-  input: Ref<string>
-  triggerResize: () => void
-}
 export declare function useTextareaAutosize(
   options?: UseTextareaAutosizeOptions,
-): UseTextareaAutosizeReturn
+): {
+  textarea: Ref<
+    HTMLTextAreaElement | null | undefined,
+    HTMLTextAreaElement | null | undefined
+  >
+  input: Ref<string, string>
+  triggerResize: () => void
+}
+export type UseTextareaAutosizeReturn = ReturnType<typeof useTextareaAutosize>
 ```
