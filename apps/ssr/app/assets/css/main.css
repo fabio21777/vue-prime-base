@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300..700&display=swap');
+@import "primeicons/primeicons.css";
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+@layer tailwind-base, primevue, tailwind-utilities;
+
+@layer tailwind-base {
+    @tailwind base;
+
+    body {
+        @apply font-sans antialiased text-dark bg-white overflow-x-hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply font-sans tracking-tight text-dark font-medium;
+    }
+}
+
+@layer tailwind-utilities {
+    @tailwind components;
+    @tailwind utilities;
+}
+
+.p-button {
+  display: inline-flex;
+  cursor: pointer;
+  user-select: none;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  color: var(--p-button-primary-color);
+  background: var(--p-button-primary-background);
+  border: 1px solid var(--p-button-primary-border-color);
+  padding: var(--p-button-padding-y) var(--p-button-padding-x);
+  font-size: 1rem;
+  font-family: inherit;
+  font-feature-settings: inherit;
+  transition: background var(--p-button-transition-duration), color var(--p-button-transition-duration), border-color var(--p-button-transition-duration), outline-color var(--p-button-transition-duration), box-shadow var(--p-button-transition-duration);
+  border-radius: var(--p-button-border-radius);
+  outline-color: transparent;
+  gap: var(--p-button-gap);
+}
